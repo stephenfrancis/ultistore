@@ -1,0 +1,38 @@
+{
+  "name": "ultistore",
+  "version": "0.0.0",
+  "description": "Browser Storage Wrapper",
+  "engines": {
+    "node": "^10.17"
+  },
+  "scripts": {
+    "build": "tsc --project src",
+    "coverage": "nyc npm run test",
+    "diagnosis": "ava -t -v --serial",
+    "test": "ava",
+    "version_click": "node src/config/make.js version_click"
+  },
+  "author": "stephen.d.francis@gmail.com",
+  "keywords": [
+    "storage",
+    "tools"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:stephenfrancis/ultistore.git"
+  },
+  "license": "ISC",
+  "sideEffects": false,
+  "dependencies": {
+    "loglevel": "^1.6.7",
+    "underscore": "^1.10.2"
+  },
+  "devDependencies": {
+    "ava": "^3.7.0",
+    "codecov": "^3.6.5",
+    "fake-indexeddb": "^3.0.1",
+    "nyc": "^15.0.0",
+    "tsc": "^1.20150623.0",
+    "ultimake": "0.4.1"
+  }
+}
