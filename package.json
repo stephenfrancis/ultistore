@@ -23,6 +23,9 @@
   },
   "license": "ISC",
   "sideEffects": false,
+  "ultimake_settings": {
+    "exec_on_version_click": "npm publish --access public"
+  },
   "dependencies": {
     "loglevel": "^1.6.7",
     "underscore": "^1.10.2"
