@@ -10,7 +10,7 @@
     "coverage": "nyc npm run test",
     "diagnosis": "ava -t -v --serial",
     "test": "ava",
-    "version_click": "node src/config/make.js version_click"
+    "version_click": "node_modules/ultimake/src/entry.js version_click"
   },
   "author": "stephen.d.francis@gmail.com",
   "keywords": [
