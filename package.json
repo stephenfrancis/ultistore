@@ -1,6 +1,6 @@
 {
   "name": "ultistore",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Browser Storage Wrapper",
   "engines": {
     "node": ">=10"
