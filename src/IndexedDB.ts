@@ -1,8 +1,6 @@
-
 import * as RootLog from "loglevel";
 import * as Underscore from "underscore";
 import IndexedDBStore from "./IndexedDBStore";
-
 
 const Log = RootLog.getLogger("Lapis.IndexedDB");
 
@@ -15,7 +13,6 @@ export default class IndexedDB {
   private version: number;
   private stores: { [key: string]: IndexedDBStore };
 
-
   constructor(window_indexedDB: any, db_id: string, version: number) {
     if (typeof version !== "number") {
       throw new Error("version number must be supplied");
@@ -26,22 +23,27 @@ export default class IndexedDB {
     this.stores = {};
   }
 
-
-  public addStore(store_id: string, create_properties: any, indexes: Array<Object>): IndexedDBStore {
+  public addStore(
+    store_id: string,
+    create_properties: any,
+    indexes: Array<Object>
+  ): IndexedDBStore {
     this.throwIfStarted();
     if (this.stores[store_id]) {
       throw new Error("store id already in use: " + store_id);
     }
-    const store: IndexedDBStore = new IndexedDBStore(store_id, create_properties, indexes);
+    const store: IndexedDBStore = new IndexedDBStore(
+      store_id,
+      create_properties,
+      indexes
+    );
     this.stores[store_id] = store;
     return store;
   }
 
-
   public isStarted(): boolean {
     return !!this.db;
   }
-
 
   private throwIfStarted(): void {
     if (this.isStarted()) {
@@ -49,11 +51,14 @@ export default class IndexedDB {
     }
   }
 
-
   public start() {
     const that = this;
     this.throwIfStarted();
-    Log.debug("opening indexedDB database: %s, version: %d", this.db_id, this.version);
+    Log.debug(
+      "opening indexedDB database: %s, version: %d",
+      this.db_id,
+      this.version
+    );
     return new Promise(function (resolve, reject) {
       var request = that.window_indexedDB.open(that.db_id, that.version);
 
@@ -67,7 +72,7 @@ export default class IndexedDB {
       request.onsuccess = function () {
         that.db = request.result;
         that.startStores();
-        resolve();
+        resolve(undefined);
       };
 
       request.onerror = function (error) {
@@ -78,14 +83,12 @@ export default class IndexedDB {
     });
   }
 
-
   private upgrade(old_version, request) {
     const that = this;
     Underscore.each(this.stores, function (store: IndexedDBStore) {
       store.upgrade(old_version, that.version, that.db, request);
     });
   }
-
 
   private deleteDatabase() {
     // this.throwIfStarted();
@@ -99,12 +102,10 @@ export default class IndexedDB {
     });
   }
 
-
   private startStores() {
     const that = this;
     Underscore.each(this.stores, function (store: IndexedDBStore) {
       store.start(that.db);
     });
   }
-
 }

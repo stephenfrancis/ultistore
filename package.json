@@ -3,11 +3,11 @@
   "version": "0.0.2",
   "description": "Browser Storage Wrapper",
   "engines": {
-    "node": "^10.17"
+    "node": ">=10"
   },
   "scripts": {
     "build": "tsc --project src",
-    "coverage": "nyc npm run test",
+    "coverage": "nyc yarn test",
     "diagnosis": "ava -t -v --serial",
     "test": "ava",
     "version_click": "node_modules/ultimake/src/entry.js version_click"
@@ -35,7 +35,7 @@
     "codecov": "^3.6.5",
     "fake-indexeddb": "^3.0.1",
     "nyc": "^15.0.0",
-    "tsc": "^1.20150623.0",
-    "ultimake": "0.4.1"
+    "typescript": "^4.3.5",
+    "ultimake": "0.7.1"
   }
 }

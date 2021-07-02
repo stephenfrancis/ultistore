@@ -1,8 +1,6 @@
-
 import * as RootLog from "loglevel";
 import Store from "./Store";
 import StoredObject from "./StoredObject";
-
 
 const Log = RootLog.getLogger("Lapis.AjaxStore");
 
@@ -21,21 +19,19 @@ export default class AjaxStore {
   private response_convert: Function;
   private server_url: string;
 
-
   constructor(local_store, server_url) {
     this.local_store = local_store;
     this.mode = Mode.Both;
     this.response_convert = function (url: string, str: string): StoredObject {
       return JSON.parse(str) as StoredObject;
-    }
+    };
     this.server_url = server_url;
   }
-
 
   public getDoc(rel_path: string): Promise<StoredObject> {
     const that = this;
     return new Promise(function (resolve, reject) {
-      resolve();
+      resolve(undefined);
     })
       .then(function () {
         Log.debug(`getDoc()..1 mode: ${that.mode}, rel_path: ${rel_path}`);
@@ -56,12 +52,10 @@ export default class AjaxStore {
       });
   }
 
-
   // take path_array and return a Promise
   getDocFromStore(rel_path: string): Promise<StoredObject> {
     return this.local_store.get(rel_path);
   }
-
 
   // take path_array and return a Promise
   getDocFromServer(rel_path: string): Promise<StoredObject> {
@@ -72,11 +66,12 @@ export default class AjaxStore {
     });
   }
 
-
   // Return a Promise; options MUST contain url and type
   getFileFromServer(options: any): Promise<StoredObject> {
     const that = this;
-    Log.debug(`getFileFromServer() preparing to send: ${options.type}, ${options.url}`);
+    Log.debug(
+      `getFileFromServer() preparing to send: ${options.type}, ${options.url}`
+    );
     return new Promise(function (resolve, reject) {
       const xhr = new XMLHttpRequest();
       xhr.open(options.type, options.url);
@@ -87,10 +82,11 @@ export default class AjaxStore {
     });
   }
 
-
   private onServerMessageReceived(xhr, resolve, reject) {
     var msg;
-    Log.debug(`getFileFromServer() onreadystatechange: ${xhr.readyState}, ${xhr.status}`);
+    Log.debug(
+      `getFileFromServer() onreadystatechange: ${xhr.readyState}, ${xhr.status}`
+    );
     if (xhr.readyState === XMLHttpRequest.DONE) {
       if (xhr.status === 200) {
         Log.debug(`getFileFromServer() successfully sent: ${xhr.responseURL}`);
@@ -105,24 +101,19 @@ export default class AjaxStore {
     }
   }
 
-
   public setModeBoth(): void {
     this.mode = Mode.Both;
   }
-
 
   public setModeServer(): void {
     this.mode = Mode.Server;
   }
 
-
   public setModeStore(): void {
     this.mode = Mode.Store;
   }
 
-
   public setResponseConverter(funct: Function): void {
     this.response_convert = funct;
   }
-
 }
